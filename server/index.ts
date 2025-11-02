@@ -1,11 +1,12 @@
 /** @format */
 
-import dotenv from "dotenv";
+import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import userRoute from "./src/routers/user";
-dotenv.config();
+import storageRoute from "./src/routers/product";
 import cors from "cors";
+import { verifyToken } from "./src/middleware/verifylToken";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,9 @@ const PORT = process.env.PORT || 3001;
 const dbURL = `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@cluster0.bw4ardn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 app.use("/auth", userRoute);
+
+app.use(verifyToken);
+app.use("/storage", storageRoute);
 console.log(process.env.DATABASE_PASSWORD);
 app.get("/logs", async (req, res) => {
   const { page, limit } = req.query;

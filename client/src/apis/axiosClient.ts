@@ -1,4 +1,5 @@
 import axios from "axios";
+import { localDataNames } from "constants/appinfos";
 import queryString from "query-string";
 
 const axiosClient = axios.create({
@@ -6,10 +7,15 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
+const getAccessToken = () => {
+  const res = localStorage.getItem(localDataNames.authData);
+  return res ? JSON.parse(res).token : "";
+};
 axiosClient.interceptors.request.use(async (config: any) => {
+  const accessToken = getAccessToken();
   config.headers = {
     ...config.headers,
-    Authorization: "",
+    Authorization: accessToken,
     Accept: "application/json",
   };
   return config;

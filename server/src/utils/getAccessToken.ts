@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import "dotenv/config";
 import { Types } from "mongoose";
 
 export const getAccessToken = async (payload: {
@@ -7,9 +6,7 @@ export const getAccessToken = async (payload: {
   email: string;
   rule?: number;
 }) => {
-  const token = jwt.sign(payload, process.env.SECRET_KEY as string, {
-    expiresIn: "1d",
-  });
+  const token = jwt.sign(payload, process.env.SECRET_KEY as string);
 
   return token;
 };

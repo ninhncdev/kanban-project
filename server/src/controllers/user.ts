@@ -106,4 +106,26 @@ const login = async (req: any, res: any) => {
     res.status(404).json({ message: error.message });
   }
 };
-export { register, login, loginWithGoogle };
+const refreshToken = async (req: any, res: any) => {
+  try {
+    const { id } = req.query;
+    const user: any = UserModel.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const token = await getAccessToken({
+      _id: id,
+      email: user.email,
+      rule: user.rule,
+    });
+    res.status(200).json({
+      message: "Success!",
+      data: token,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+};
+export { register, login, loginWithGoogle, refreshToken };
