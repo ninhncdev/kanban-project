@@ -15,15 +15,29 @@ const Routers = () => {
   const auth: IAuthSate = useSelector(authSeletor);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
     const res = localStorage.getItem(localDataNames.authData);
-    res && dispatch(addAuth(JSON.parse(res)));
-  };
-  return isLoading ? <Spin /> : !auth.token ? <AuthRouter /> : <MainRouter />;
+    if (res) {
+      dispatch(addAuth(JSON.parse(res)));
+    }
+    setIsLoading(false);
+  }, [dispatch]);
+  // const getData = async () => {
+  //   const res = localStorage.getItem(localDataNames.authData);
+  //   res && dispatch(addAuth(JSON.parse(res)));
+  // };
+  return isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <Spin size="large" />
+    </div>
+  ) : !auth.token ? (
+    <AuthRouter />
+  ) : (
+    <MainRouter />
+  );
 };
 
 export default Routers;

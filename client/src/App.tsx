@@ -4,7 +4,7 @@ import Routers from "./routers/Routers";
 import "@ant-design/v5-patch-for-react-19";
 import { Provider } from "react-redux";
 import store from "./reduxs/store";
-
+import { BrowserRouter } from "react-router-dom";
 message.config({
   maxCount: 3,
   duration: 2,
@@ -19,7 +19,9 @@ function App() {
       }}
     >
       <Provider store={store}>
-        <Routers />
+        <BrowserRouter>
+          <Routers />
+        </BrowserRouter>
       </Provider>
     </ConfigProvider>
   );

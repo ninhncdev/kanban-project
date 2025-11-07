@@ -14,9 +14,9 @@ const getAccessToken = () => {
 axiosClient.interceptors.request.use(async (config: any) => {
   const accessToken = getAccessToken();
   config.headers = {
-    ...config.headers,
     Authorization: accessToken,
     Accept: "application/json",
+    ...config.headers,
   };
   return config;
 });

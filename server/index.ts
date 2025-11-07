@@ -4,12 +4,15 @@ import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import userRoute from "./src/routers/user";
-import storageRoute from "./src/routers/product";
+import storageRoute from "./src/routers/storage";
+import supplierRoute from "./src/routers/supplier";
+import uploadImageRoute from "./src/routers/uploadImage";
 import cors from "cors";
 import { verifyToken } from "./src/middleware/verifylToken";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const PORT = process.env.PORT || 3001;
@@ -17,9 +20,11 @@ const dbURL = `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATA
 
 app.use("/auth", userRoute);
 
+app.use("/api", uploadImageRoute);
 app.use(verifyToken);
 app.use("/storage", storageRoute);
-console.log(process.env.DATABASE_PASSWORD);
+app.use("/supplier", supplierRoute);
+
 app.get("/logs", async (req, res) => {
   const { page, limit } = req.query;
   const pageNumber = parseInt(page as string) || 1;

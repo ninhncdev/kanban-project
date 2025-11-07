@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Login, Signup } from "../screens";
 import { Typography } from "antd";
 
@@ -15,13 +15,11 @@ const AuthRouter = () => {
           <Title>Kanban</Title>
         </div>
         <div className="col content-center">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/sign-up" element={<Signup />} />
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/sign-up" element={<Signup />} />
+          </Routes>
         </div>
       </div>
     </div>
